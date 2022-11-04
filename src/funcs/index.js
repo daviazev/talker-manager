@@ -38,6 +38,7 @@ const addNewTalker = async ({ name, age, talk }) => {
 
   const allTalkers = JSON.stringify([...talkers, newTalker]);
   await writeFile(path.resolve(__dirname, PATH_TO_FILE), allTalkers);
+  return newTalker;
 };
 
 module.exports = { 

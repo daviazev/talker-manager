@@ -7,6 +7,7 @@ const existingId = require('../middlewares/existingId');
 const auth = require('../middlewares/auth');
 const validateName = require('../middlewares/validateName');
 const validateAge = require('../middlewares/validateAge');
+const { validateTalk, validwatchedAt, rateValidation } = require('../middlewares/validateTalk');
 
 router.get('/', async (req, res) => {
   try {
@@ -27,12 +28,15 @@ router.post('/',
     auth, 
     validateName,
     validateAge,
+    validateTalk,
+    validwatchedAt,
+    rateValidation,
   async (req, res) => {
    const { name, age, talk } = req.body;
 
-   const talkerAdded = await addNewTalker({ name, age, talk });
+   const newTalker = await addNewTalker({ name, age, talk });
 
-   res.status(201).json(talkerAdded);
+   res.status(201).json(newTalker);
 });
 
 module.exports = router;
