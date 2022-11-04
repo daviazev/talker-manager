@@ -6,6 +6,7 @@ const { getAllTalkers, getTalkerById, addNewTalker } = require('../funcs');
 const existingId = require('../middlewares/existingId');
 const auth = require('../middlewares/auth');
 const validateName = require('../middlewares/validateName');
+const validateAge = require('../middlewares/validateAge');
 
 router.get('/', async (req, res) => {
   try {
@@ -25,6 +26,7 @@ router.get('/:id', existingId, async (req, res) => {
 router.post('/', 
     auth, 
     validateName,
+    validateAge,
   async (req, res) => {
    const { name, age, talk } = req.body;
 
