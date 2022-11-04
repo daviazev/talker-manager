@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { getAllTalkers, getTalkerById, addNewTalker } = require('../funcs');
+const { getAllTalkers, getTalkerById, addNewTalker, updateTalker } = require('../funcs');
 const existingId = require('../middlewares/existingId');
 const auth = require('../middlewares/auth');
 const validateName = require('../middlewares/validateName');
@@ -37,6 +37,21 @@ router.post('/',
    const newTalker = await addNewTalker({ name, age, talk });
 
    res.status(201).json(newTalker);
+});
+
+router.put('/:id', 
+    auth, 
+    validateName,
+    validateAge,
+    validateTalk,
+    validwatchedAt,
+    rateValidation,
+  async (req, res) => {
+    const { name, age, talk } = req.body;
+    const { id } = req.params;
+
+    const talkerUpdated = await updateTalker({ name, age, talk }, Number(id));
+    res.status(200).json(talkerUpdated);
 });
 
 module.exports = router;

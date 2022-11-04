@@ -41,9 +41,23 @@ const addNewTalker = async ({ name, age, talk }) => {
   return newTalker;
 };
 
+const updateTalker = async ({ name, age, talk }, id) => {
+  const talkers = await readTalkerFile();
+
+  const updating = talkers.map((obj) => {
+    if (obj.id === id) return { id, name, age, talk };
+
+    return obj;
+  });
+
+  await writeFile(path.resolve(__dirname, PATH_TO_FILE), JSON.stringify(updating));
+  return updating.find((obj) => obj.id === id);
+};
+
 module.exports = { 
   getAllTalkers,
   getTalkerById,
   generateToken,
   addNewTalker,
+  updateTalker,
 };
