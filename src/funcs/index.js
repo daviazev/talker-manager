@@ -1,6 +1,7 @@
-const { readFile } = require('fs').promises;
+const { readFile, writeFile } = require('fs').promises;
 const { join } = require('path');
 const crypto = require('crypto');
+const path = require('path');
 
 const PATH_TO_FILE = '../talker.json';
 
@@ -25,8 +26,23 @@ const getTalkerById = async (id) => {
 
 const generateToken = () => crypto.randomBytes(8).toString('hex');
 
+const addNewTalker = async ({ name, age, talk }) => {
+  const talkers = await readTalkerFile();
+
+  const newTalker = {
+    name,
+    age,
+    id: talkers.length + 1,
+    talk,
+  };
+
+  const allTalkers = JSON.stringify([...talkers, newTalker]);
+  await writeFile(path.resolve(__dirname, PATH_TO_FILE), allTalkers);
+};
+
 module.exports = { 
   getAllTalkers,
   getTalkerById,
   generateToken,
+  addNewTalker,
 };
