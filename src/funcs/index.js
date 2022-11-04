@@ -54,10 +54,18 @@ const updateTalker = async ({ name, age, talk }, id) => {
   return updating.find((obj) => obj.id === id);
 };
 
+const removeTalker = async (id) => {
+  const talkers = await readTalkerFile();
+
+  const result = talkers.filter((talker) => talker.id !== id);
+  await writeFile(path.resolve(__dirname, PATH_TO_FILE), JSON.stringify(result));
+};
+
 module.exports = { 
   getAllTalkers,
   getTalkerById,
   generateToken,
   addNewTalker,
   updateTalker,
+  removeTalker,
 };

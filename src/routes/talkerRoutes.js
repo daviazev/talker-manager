@@ -2,7 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
-const { getAllTalkers, getTalkerById, addNewTalker, updateTalker } = require('../funcs');
+const { 
+  getAllTalkers, getTalkerById, addNewTalker, updateTalker, removeTalker,
+} = require('../funcs');
+
 const existingId = require('../middlewares/existingId');
 const auth = require('../middlewares/auth');
 const validateName = require('../middlewares/validateName');
@@ -52,6 +55,13 @@ router.put('/:id',
 
     const talkerUpdated = await updateTalker({ name, age, talk }, Number(id));
     res.status(200).json(talkerUpdated);
+});
+
+router.delete('/:id', auth, async (req, res) => {
+  const { id } = req.params;
+
+  await removeTalker(Number(id));
+  return res.status(204).json();
 });
 
 module.exports = router;
