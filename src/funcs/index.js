@@ -1,5 +1,6 @@
 const { readFile } = require('fs').promises;
 const { join } = require('path');
+const crypto = require('crypto');
 
 const PATH_TO_FILE = '../talker.json';
 
@@ -22,7 +23,10 @@ const getTalkerById = async (id) => {
   return talkers.find(((talker) => talker.id === id));
 };
 
+const generateToken = () => crypto.randomBytes(8).toString('hex');
+
 module.exports = { 
   getAllTalkers,
   getTalkerById,
+  generateToken,
 };

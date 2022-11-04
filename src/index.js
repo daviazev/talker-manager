@@ -8,6 +8,7 @@ const HTTP_OK_STATUS = 200;
 const PORT = '3000';
 
 const talkerRoutes = require('./routes/talkerRoutes');
+const loginRoutes = require('./routes/loginRoutes');
 
 app.use(express.json());
 
@@ -17,6 +18,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/talker', talkerRoutes);
+app.use('/login', loginRoutes);
 
 app.listen(PORT, () => {
   console.log('Online');
