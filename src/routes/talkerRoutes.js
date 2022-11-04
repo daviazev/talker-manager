@@ -5,6 +5,7 @@ const router = express.Router();
 const { getAllTalkers, getTalkerById, addNewTalker } = require('../funcs');
 const existingId = require('../middlewares/existingId');
 const auth = require('../middlewares/auth');
+const validateName = require('../middlewares/validateName');
 
 router.get('/', async (req, res) => {
   try {
@@ -21,7 +22,10 @@ router.get('/:id', existingId, async (req, res) => {
   res.status(200).json(talker);
 });
 
-router.post('/', auth, async (req, res) => {
+router.post('/', 
+    auth, 
+    validateName,
+  async (req, res) => {
    const { name, age, talk } = req.body;
 
    const talkerAdded = await addNewTalker({ name, age, talk });
