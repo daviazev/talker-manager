@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const { 
-  getAllTalkers, getTalkerById, addNewTalker, updateTalker, removeTalker,
+  getAllTalkers, getTalkerById, addNewTalker, updateTalker, removeTalker, searchTerm,
 } = require('../funcs');
 
 const existingId = require('../middlewares/existingId');
@@ -11,6 +11,12 @@ const auth = require('../middlewares/auth');
 const validateName = require('../middlewares/validateName');
 const validateAge = require('../middlewares/validateAge');
 const { validateTalk, validwatchedAt, rateValidation } = require('../middlewares/validateTalk');
+
+router.get('/search', auth, async (req, res) => {
+  const { q } = req.query;
+  const response = await searchTerm(q);
+  res.status(200).json(response);
+});
 
 router.get('/', async (req, res) => {
   try {

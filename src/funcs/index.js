@@ -61,6 +61,14 @@ const removeTalker = async (id) => {
   await writeFile(path.resolve(__dirname, PATH_TO_FILE), JSON.stringify(result));
 };
 
+const searchTerm = async (query) => {
+  const talkers = await readTalkerFile();
+
+  const search = talkers.filter((obj) => obj.name.includes(query));
+  
+  return search;
+};
+
 module.exports = { 
   getAllTalkers,
   getTalkerById,
@@ -68,4 +76,5 @@ module.exports = {
   addNewTalker,
   updateTalker,
   removeTalker,
+  searchTerm,
 };
